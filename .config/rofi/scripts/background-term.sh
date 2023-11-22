@@ -1,0 +1,55 @@
+#/usr/bin/env bash
+
+PicomDIR="$HOME/.config/picom"
+dir="$HOME/.config/rofi/themes-scripts"
+rofi_command="rofi -show drun -theme $dir/settings.rasi"
+
+Blur(){
+    if grep -q "70:class_g = 'kitty'" $PicomDIR/picom.conf && grep -q "normal = {blur-background = true" $PicomDIR/picom.conf
+    then
+        rofi -theme "$dir/message.rasi" -e "The blur effect is already"
+    else
+        sed -i "s/normal = {blur-background = false/normal = {blur-background = true/g" $PicomDIR/picom.conf
+        sed -i "s/100:class_g = 'kitty'/70:class_g = 'kitty'/g" $PicomDIR/picom.conf
+    fi
+}
+
+Solid(){
+    if grep -q "100:class_g = 'kitty'" $PicomDIR/picom.conf
+    then
+        rofi -theme "$dir/message.rasi" -e "Solid effect is already"
+    else
+        sed -i "s/70:class_g = 'kitty'/100:class_g = 'kitty'/g" $PicomDIR/picom.conf
+    fi
+}
+
+Transparent(){
+    if grep -q "normal = {blur-background = false" $PicomDIR/picom.conf && grep -q "70:class_g = 'kitty'" $PicomDIR/picom.conf
+    then
+        rofi -theme "$dir/message.rasi" -e "Transparent effect is already"
+    else
+       sed -i "s/100:class_g = 'kitty'/70:class_g = 'kitty'/g" $PicomDIR/picom.conf
+        sed -i "s/normal = {blur-background = true/normal = {blur-background = false/g" $PicomDIR/picom.conf 
+    fi
+}
+
+#Buttons
+blur="Blur"
+solid="Solid"
+translucent="Transparent"
+
+options="$blur\n$solid\n$translucent"
+
+chosen="$(echo -e "$options" | $rofi_command -p 'Select terminal background' -dmenu -selected-row 0)"
+
+case $chosen in 
+    $blur)
+        Blur
+        ;;
+    $solid)
+        Solid
+        ;;
+    $translucent)
+        Transparent
+        ;;
+esac

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cp $1 $HOME/.wallpaper
+wal -i $1 && sh ~/.config/rofi/scripts/color-setup.sh && betterlockscreen -u $1 --blur 0.50 --quiet >/dev/null 2>&1

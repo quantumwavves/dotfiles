@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cp $1 $HOME/.wallpaper
+wal -i $1 && sh ~/.config/rofi/scripts/color-setup.sh && pywalfox update && pywal-discord && betterlockscreen -u $1 --blur 0.50 --quiet 2>&1 >/dev/null
