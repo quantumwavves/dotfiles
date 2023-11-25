@@ -31,30 +31,18 @@ install() {
 	echo -e "${cyan}[+] Install dependencies...${reset}"
 	sleep 1s
 	if [ -a /usr/bin/yay ] >/dev/null 2>&1; then
-		yay -S --needed $packages
+		yay -S --needed --noconfirm $packages
 		echo -e "${green}[-] Done. Packages are installed${reset}"
-		#Installing picom-jonaburg-git
-		echo -e "${yellow}[+] Installing Picom Jonaburg Fork${reset}"
-		echo -e "${yellow}[+] Installing dependencies${reset}"
-    yay -S meson ninja uthash libconfig
-    echo -e "${cyan}[+] Clone repository${reset}"
-    cd $HOME/.cache
-		git clone https://github.com/jonaburg/picom.git
-		cd picom
-		echo -e "${red}[+] Compile source code${reset}"
-    meson --buildtype=release . build
-		ninja -C build
-    # To install the binaries in /usr/local/bin
-		sudo ninja -C build install
-		cd $HOME
-		optional_features
+		picom_compile
+    optional_features
 		zsh_setup
 	else
 		echo -e "${red}[-] Yay aur helper are not installed${reset}"
 		aur_yay
-		yay -S --needed $packages
+		yay -S --needed --noconfirm $packages
 		echo -e "${green}[-] Done. Packages are installed${reset}"
-		optional_features
+		picom_compile
+    optional_features
 		zsh_setup
 	fi
 	copy_dots
@@ -86,6 +74,22 @@ aur_yay() {
 		echo -e "${red}[-] Aborted.${reset}"
 		exit 0
 	fi
+}
+#Compile compositor
+picom_compile(){
+  #Installing picom-jonaburg-git
+  echo -e "${yellow}[+] Installing Picom Jonaburg Fork${reset}"
+	echo -e "${yellow}[+] Installing dependencies${reset}"
+  yay -S meson ninja uthash libconfig --noconfirm
+  echo -e "${cyan}[+] Clone repository${reset}"
+  cd $HOME/.cache
+	git clone https://github.com/jonaburg/picom.git
+	cd picom
+	echo -e "${red}[+] Compile source code${reset}"
+  meson --buildtype=release . build
+	ninja -C build
+  # To install the binaries in /usr/local/bin
+	sudo ninja -C build install
 }
 #Copy files
 copy_dots() {
