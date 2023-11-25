@@ -91,8 +91,8 @@ aur_yay() {
 copy_dots() {
 	echo -e "${cyan}[+] Obtain dotfiles${reset}"
 	cd $HOME/.cache
-	git clone https://github.com/quantumwavves/quantum-dotfiles.git
-	cd quantum-dotfiles
+	git clone https://github.com/quantumwavves/dotfiles.git
+	cd dotfiles
 	cp -r .config/* $HOME/.config
 	echo -e "${cyan}[+] Copy fonts...${reset}"
 	mkdir $HOME/.fonts
@@ -114,7 +114,7 @@ copy_dots() {
 		echo 'export PATH=$PATH:"$HOME/.local/bin"' >>$HOME/.bashrc
 	fi
 	echo -e "${cyan}[+] Copy default wallpaper${reset}"
-	curl -o $HOME/.wallpaper https://media.githubusercontent.com/media/quantumwavves/quantum-dotfiles/master/wallpaper/default.jpg
+	cp ~/.cache/dotfiles/wallpaper.png ~/.wallpaper
 	echo -e "${cyan}[+] Installing Tmux Package Manager${reset}"
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	echo -e "${cyan}[+] Install tmux plugins${reset}"
@@ -124,7 +124,7 @@ copy_dots() {
 }
 optional_features() {
 	echo -e "${yellow}[?] Do you want download optional dependencies?(y/n)${reset}"
-	echo -e "[+] About that optional features: https://quantumwavves.github.io/#additional-features-optional"
+	echo -e "[+] About that optional features: https://quantumwavves.github.io/#caracteristicas-opcionales-"
 	read -p "[*] Option: " opt_deps
 	if [ $opt_deps = "y" ]; then
 		echo -e "${cyan}[+] Install optional dependencies...${reset}"
@@ -142,7 +142,7 @@ zsh_setup() {
 		yay -S --needed zsh curl
 		echo -e "${cyan}[+] Copy .zshrc config in ~/.zshrc${reset}"
 		rm -f $HOME/.zshrc
-		cp $HOME/.cache/quantum-dotfiles/.zshrc $HOME/.zshrc
+		cp $HOME/.cache/dotfiles/.zshrc $HOME/.zshrc
 		echo -e "${cyan}[+] Installing ohmyzsh${reset}"
 		sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 		echo -e "${cyan}[+] Installing plugins for zsh${reset}"
@@ -160,7 +160,7 @@ zsh_setup() {
 
 finish() {
 	echo -e "${green}[-] Finish installation, please reboot system${reset}"
-	echo -e "[+] For manual installation, check: https://quantumwavves.github.io/projects/dotfiles/#manual-installation-"
+	echo -e "[+] For manual installation, check: https://quantumwavves.github.io/projects/dotfiles/#instalacion-manual-"
 	echo -e "${yellow}[+] More features in: ${reset}"
 	echo -e "${green}[-] Exiting!${reset}"
 }
