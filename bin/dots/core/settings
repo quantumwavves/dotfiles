@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Define paths
+themes="$HOME/.config/rofi/themes-scripts"
+bin="$HOME/.local/bin/dots"
+rofi_command="rofi -show drun -theme $themes/settings.rasi"
+#Buttons
+bars="Bars"
+shell="Terminal"
+vsync="Vsync"
+Colors="Colors"
+
+options="$bars\n$shell\n$vsync\n$Colors"
+
+chosen="$(echo -e "$options" | $rofi_command -p 'Settings Menu' -dmenu -selected-row 0)"
+
+#Case for options
+
+case $chosen in
+$bars)
+	sh $bin/bars.sh
+	;;
+$shell)
+	sh $bin/background-term.sh
+	;;
+$vsync)
+	sh $bin/vsync-compositor.sh
+	;;
+$Colors)
+	sh $bin/colors-wm.sh
+	;;
+esac

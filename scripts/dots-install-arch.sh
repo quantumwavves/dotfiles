@@ -11,7 +11,7 @@ cyan="\033[0;36m"
 packages="bspwm sxhkd kitty polybar rofi feh git tmux\
   betterlockscreen xclip imagemagick maim pcmanfm-gtk3\
   ranger python-pywal lsd stalonetray xdo neofetch\
-  checkupdates+aur pulseaudio xorg-xrandr curl\
+  checkupdates-with-aur pulseaudio xorg-xrandr curl\
   ttf-jetbrains-mono-nerd dunst awesome-terminal-fonts\ 
   ttf-font-awesome unzip nodejs npm"
 optional_packages="python-pywalfox pywal-discord-git"
@@ -97,7 +97,7 @@ copy_dots() {
 	cd $HOME/.cache
 	git clone https://github.com/quantumwavves/dotfiles.git
 	cd dotfiles
-	cp -r .config/* $HOME/.config
+	cp -r config/* $HOME/.config
 	echo -e "${cyan}[+] Copy fonts...${reset}"
 	mkdir $HOME/.fonts
 	cp -r fonts/* $HOME/.fonts
@@ -107,8 +107,8 @@ copy_dots() {
 	echo -e "${yellow}[*] Copy scripts in ~/.local/bin${reset}"
 	if [ -d $HOME/.local/bin ] >/dev/null 2>&1; then
 		cp -r bin/* $HOME/.local/bin
-		chmod +x $HOME/.local/bin/wmcolor
-		chmod +x $HOME/.local/bin/wmcolor+
+		chmod +x $HOME/.local/bin/dots/colors/wmcolor
+		chmod +x $HOME/.local/bin/dots/colors/wmcolor+
 		echo 'export PATH=$PATH:"$HOME/.local/bin"' >>$HOME/.bashrc
 	else
 		mkdir $HOME/.local/bin
